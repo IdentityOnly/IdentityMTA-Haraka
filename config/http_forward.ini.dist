@@ -1,0 +1,5 @@
+[receiver]
+socketPath=/var/run/nginx/identitymta.socket;
+method=POST;
+path=/mta/receive;
+auth=identitymta:password;
