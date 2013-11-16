@@ -1,6 +1,6 @@
 var http = require('http');
 
-exports.hooks_queue = function(next, connection) {
+exports.hook_queue = function(next, connection) {
     var config = this.config.get('http_forward.ini');
     var request = http.request(config.receiver, function(response) {
         if(response.statusCode == 200) {
