@@ -14,7 +14,7 @@ exports.hooks_queue = function(next, connection) {
         next(DENYSOFT, 'Queue failed due to HTTP error');
     });
     
-    request.write(connection.transaction.message_stream);
+    request.pipe(connection.transaction.message_stream);
     
     request.end();
 }
