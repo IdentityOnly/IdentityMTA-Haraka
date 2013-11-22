@@ -1,8 +1,17 @@
 var http = require('http');
 
 exports.hook_queue = function(next, connection) {
-    var config = this.config.get('http_forward.ini');
-    var request = http.request(config.receiver, function(response) {
+    var config,
+        receiverConfig,
+        request;
+
+    config = this.config.get('http_forward.ini');
+    receiverConfig = config.receiver;
+    receiverConfig.headers = {
+        'Content-Type': 'application/octet-stream'
+    };
+    
+    request = http.request(receiverConfig, function(response) {
         if(response.statusCode == 200) {
             next(OK, 'Message delivered to receiver');
         } else {
@@ -16,7 +25,7 @@ exports.hook_queue = function(next, connection) {
     
     connection.loginfo(this, 'Forwarding message via HTTP');
     
-    request.pipe(connection.transaction.message_stream);
+    connection.transaction.message_stream.pipe(request);
     
     request.end();
 }

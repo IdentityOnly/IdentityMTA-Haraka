@@ -1,2 +1,3 @@
-./queue
-./config/smtp.ini
+queue
+config/smtp.ini
+config/http_forward.ini
