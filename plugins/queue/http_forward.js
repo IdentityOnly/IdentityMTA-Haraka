@@ -8,7 +8,7 @@ exports.hook_queue = function(next, connection) {
     config = this.config.get('http_forward.ini');
     receiverConfig = config.receiver;
     receiverConfig.headers = {
-        'Content-Type': 'application/octet-stream'
+        'Content-Type': 'text/plain'
     };
     
     request = http.request(receiverConfig, function(response) {
@@ -26,6 +26,4 @@ exports.hook_queue = function(next, connection) {
     connection.loginfo(this, 'Forwarding message via HTTP');
     
     connection.transaction.message_stream.pipe(request);
-    
-    request.end();
 }
